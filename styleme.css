@@ -11,11 +11,31 @@
     color: blue;
     background-color: yellow;
     font-weight: bold;
-    text-align: center;
+    text-align: left;
 }
 .movieList>li:hover{
     border-color: darkblue;
     border-width: 2px;
     border-style: solid;
     border-radius: 8px;
+}
+a:link,a:visited{
+  text-decoration: none;
+}
+a:hover,a:active{
+    text-decoration: underline;
+}
+h1::first-letter,h2::first-letter{
+    /*initial-letter: 1.5;*/
+    float: left;
+    font-size: 150%;
+    line-height: 1;
+}
+
+ol.movieList {
+    margin-left: 40px;
+    transform: rotate(180deg);
+}
+ol.movieList > li {
+    transform: rotate(-180deg);
 }
