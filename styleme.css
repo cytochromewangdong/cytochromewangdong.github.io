@@ -1,0 +1,21 @@
+.courseHeader{
+    color: blueviolet;
+}
+.courseList>li{
+    color: green;
+}
+.movieHeader,.movieList>li {
+    font-family: Verdana;
+}
+.movieList>li{
+    color: blue;
+    background-color: yellow;
+    font-weight: bold;
+    text-align: center;
+}
+.movieList>li:hover{
+    border-color: darkblue;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+}
