@@ -1,8 +1,12 @@
+/*
+Dong Wang, 
+This is css for Homework Assignment 2: Movie Review 
+*/
 body{
     background-image: url("background.png");
     background-repeat: repeat;
     margin: 0px;
-    padding: 0xp;
+    padding: 0px;
     font-family: Verdana, Tahoma, sans-serif;
     font-size: 8pt;
 }
@@ -64,28 +68,31 @@ h1.title {
     width: 47%;
     margin-left: 5.5px;
     margin-right: 5.5px;
+    display: flex;
     flex-direction: column;
 }
 .column{
-    margin-bottom: 20pt;
+    margin-top: 10pt;
+    margin-bottom: 10pt;
 }
 .reviewContent{
     font-weight: bold;
     font-size: 8pt;
     background-color: #E8DC9B;
     border-radius: 10px;
-    border-width: xpx;
+    border-width: 3px;
     border-color: gray;
     border-style: solid;
     padding: 8px;
     overflow: hidden;
+    margin-bottom: 8px;
 }
 .reviewContent>img{
     margin-right: 5px;
     float: left;
 }
 .reviewer > img{
-    margin-right: 5x;
+    margin-right: 5px;
 }
 .publication{
     font-style: italic;
@@ -102,6 +109,10 @@ h1.title {
 #overview dt{
     font-weight: bold;
     margin-top: 10pt;
+}
+#overview dl{
+    margin-left: 10pt;
+    margin-right: 10pt;
 }
 #overview ul {
     list-style: none;
