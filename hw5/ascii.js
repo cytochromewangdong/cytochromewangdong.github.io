@@ -36,7 +36,7 @@
         });
         document.getElementById("turbo").addEventListener("change", function(event) {
             animationInterval = event.target.checked ? 50 : defaultAnimationInterval;
-            console.log('interval is ' + animationInterval);
+            console.log("interval is " + animationInterval);
         });
         //Tiny (7pt), Small (10pt), Medium (12pt), Large (16pt), Extra Large (24pt), XXL (32pt)
         const FONT_MAPPING = {
