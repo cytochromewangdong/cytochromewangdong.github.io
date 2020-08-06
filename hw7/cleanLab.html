@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>Clean lab</title>
+      <style>
+         .circle {
+         height: 50px;
+         width: 50px;
+         background-color:rebeccapurple;
+         border-radius: 50%;
+         margin: auto;
+         margin-top: 100px;
+         }
+         .controlPanel {
+             margin: auto;
+         }
+         .controlPanel > div{
+            margin: 10px; 
+         }
+      </style>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+      <script>
+         $(document).ready(function () {
+             // Make the circle grow by 10px every 250ms.
+             let lastTimer = null;
+             function startTimer(r, amount, rate){
+                 r = parseInt(r);
+                 amount = parseInt(amount);
+                 rate = parseInt(rate);
+                if(lastTimer)
+                {
+                    window.clearTimeout(lastTimer);
+                }
+                $(".circle").height(r);
+                $(".circle").width(r);
+                let grow = function(){
+                    console.log($(".circle").height());
+                    $(".circle").height($(".circle").height()+amount);
+                    $(".circle").width($(".circle").width()+amount);
+                    lastTimer = window.setTimeout(grow,rate);
+                }
+                lastTimer = window.setTimeout(grow,rate);
+             }
+             function stopCircle(){
+                if(lastTimer)
+                {
+                    window.clearTimeout(lastTimer);
+                }
+             }
+             startTimer(50, 10, 250);
+             // Remove the circle when you click on it.
+             $("#container").on("click", ".circle", function()
+             {
+                $(".circle").remove();
+                stopCircle();
+             });
+             // Put 3 text inputs on the screen with labels:width, 
+             // growth amount, grow rate.
+             // Also add a button labeled ‘Start’.
+             // When the button is clicked the circle should appear, 
+             // this time with the specified width, growth size and interval for growing.
+             $("#start").click(function(){
+                $(".circle").remove();
+                let numberOfCircles = parseInt($("#numberOfCircles").val());
+                for(let i=1;i<=numberOfCircles;i++)
+                {
+                    $("<div class='circle'></div>").appendTo("#container");
+                }
+                startTimer($("#width").val(), $("#growthAmount").val(), $("#growthRate").val())
+             });
+             //Add another text input labeled ‘Number circles’When the button is clicked put this number of circles spread around the screen and make all of them behave according to the above specifications.
+         });
+      </script>
+   </head>
+   <body>
+      <div  class="controlPanel">
+         <div>
+            <label>width:</label><input type="text" id="width" value="50"/>
+         </div>
+         <div>
+            <label>growth amount:</label><input type="text" id="growthAmount" value="10"/>
+         </div>
+         <div>
+            <label>growth rate:</label><input type="text" id="growthRate" value="250"/>
+         </div>
+         <div>
+            <label>Number circles:</label><input type="text" id="numberOfCircles" value="1"/>
+         </div>
+         <div>
+            <nav>
+               <input type="button" id="start" value="start" />
+            </nav>
+         </div>
+      </div>
+      <div class="container" id="container">
+         <div class="circle"></div>
+      </div>
+   </body>
+</html>
