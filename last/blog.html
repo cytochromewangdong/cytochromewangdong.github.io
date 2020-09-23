@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>Single	Page	Application	</title>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+      <script>
+         const SERVER = 'https://jsonplaceholder.typicode.com/';
+         function getFullURL(p){
+            return SERVER + p;
+         }
+         $(document).ready(function () {
+            $("#blog").on("click", ".showComment", function(e){
+               let tRow = $(e.target).parents(".blogRow");
+               if(tRow.data("showComment"))
+               {
+                  let comments = tRow.children(".comments");
+                  comments.empty();
+                  tRow.data("showComment",false);  
+                  $(e.target).val("show comment"); 
+               } else {
+                  $.get(getFullURL("comments"), {postId:tRow.data("bid")}).done(function(data){
+                     let comments = tRow.children(".comments");
+                     comments.empty();
+                     let container = $("<ul></ul>");
+                     data.forEach(e => {
+                        let cRow = $("<li/>");
+                        let name = $("<div/>");
+                        name.text(e.name);
+                        let email = $("<div/>");
+                        email.text(e.email);
+                        let body = $("<div/>");
+                        body.text(e.body);
+                        cRow.append(name).append(email).append(body);
+                        container.append(cRow);
+
+                     });
+                     comments.append(container);
+                     tRow.data("showComment",true);   
+                     $(e.target).val("hide comment");            
+                  });
+               }
+
+            });
+            $("input[name='query']").click(function(){
+               $("#name").empty();
+               $("#email").empty();
+               $("#address").empty();
+               $('#blog').empty();
+               $.get(getFullURL("users"), {id:$("input[name='userId']").val()}).done(function(data){
+                  if(data && data.length>0)
+                  {
+                     $("#name").text(data[0].name);
+                     $("#email").text(data[0].email);
+                     $("#address").text(JSON.stringify(data[0].address));
+                  }
+                  $.get(getFullURL("posts"), {userId: data[0].id}).done(function(blogData){
+                     
+                     let blogDiv = $(document.createElement("ul"));
+                     blogData.forEach(e => {
+                        let t = $(document.createElement('h2'));
+                        t.text(e.title);
+                        let b = $(document.createElement('p')).text(e.body);
+                        let showComment = $("<div><input type='button' class='showComment' value='show comment'></div>")
+                        let r = $(document.createElement("li"));
+                        r.addClass("blogRow");
+                        r.append(t).append(b);
+                        r.append(showComment);
+                        r.append($("<div class='comments'></div>"))
+                        r.data("bid", e.id);
+                        blogDiv.append(r);
+                     });
+                     $('#blog').append(blogDiv);
+                  }).fail(function(e){
+                     alert("Blog info retrieving Failed: "+e)
+                  });
+                  //"id": 1,
+                  // "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+                  // "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+               }).fail(function(err){
+                  alert("User info retrieving Failed: " + err);
+               });
+            });
+         });
+      </script>
+   </head>
+   <body>
+      <header>
+         <span>User Blog List</span>
+      </header>
+      <div><input type='text' name='userId' /></div>
+      <div><input type='button' name='query' value='query'></div>
+      <div> name: <span id="name"></span></div>
+      <div> email: <span id="email"></span></div>
+      <div> address: <span id="address"></span></div>
+      <div id="blog">
+      </div>
+   </body>
+</html>
